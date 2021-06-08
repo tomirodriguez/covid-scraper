@@ -78,52 +78,42 @@ const scrapCABA = async () => {
   const rootPage = "https://bamapas.usig.buenosaires.gob.ar/render_indicador/";
 
   const iframePages = [
-    { url: "positivos_residentes_dia", name: "Positivos Residentes" },
-    { url: "altas_residentes_dia", name: "Altas Residentes" },
-    { url: "fallecidos_residentes_dia", name: "Fallecidos Residentes" },
-    {
-      url: "positivos_residentes_acumulado",
-      name: "Positivos Residentes Acumulado",
-    },
-    { url: "altas_residentes_acumulado", name: "Altas Residentes Acumulado" },
-    {
-      url: "fallecidos_residentes_acumulado",
-      name: "Fallecidos Residentes Acumulado",
-    },
-
-    { url: "positivos_no_residentes_dia", name: "Positivos No Residentes" },
-    { url: "altas_no_residentes_dia", name: "Altas No Residentes" },
-    { url: "fallecidos_no_residentes_dia", name: "Fallecidos No Residentes" },
-    {
-      url: "positivos_no_residentes_acumulado",
-      name: "Positivos No Residentes Acumulado",
-    },
-    {
-      url: "altas_no_residentes_acumulado",
-      name: "Altas No Residentes Acumulado",
-    },
-    {
-      url: "fallecidos_no_residentes_acumulado",
-      name: "Fallecidos No Residentes Acumulado",
-    },
+    "positivos_residentes_dia",
+    "altas_residentes_dia",
+    "fallecidos_residentes_dia",
+    "positivos_residentes_acumulado",
+    "altas_residentes_acumulado",
+    "fallecidos_residentes_acumulado",
+    "positivos_no_residentes_dia",
+    "altas_no_residentes_dia",
+    "fallecidos_no_residentes_dia",
+    "positivos_no_residentes_acumulado",
+    "altas_no_residentes_acumulado",
+    "fallecidos_no_residentes_acumulado",
+    "vacunas_total_aplicaciones",
+    "vacunas_total_aplicacion_dosis_1",
+    "vacunas_total_aplicacion_dosis_2",
   ];
 
   let dataCABA = {};
 
   for (const iFrame of iframePages) {
     let page = await browser.newPage();
-    await page.goto(rootPage + iFrame.url);
+    await page.goto(rootPage + iFrame);
     await page.waitForSelector("h2");
     let value = await page.$eval("h2 > b", (value) => value.textContent);
-    dataCABA[iFrame.name] = parseInt(value.replace(/\./g,''));
+    dataCABA[iFrame] = parseInt(value.replace(/\./g, ""));
   }
 
-  console.log(dataCABA);
-
   await browser.close();
+
+  return dataCABA;
 };
 
 // Para correr el servicio localmente
-(async () => {
-  const data = await scrapCABA();
-})();
+// (async () => {
+//   const data = await scrapArgentina();
+//   const dataCABA = await scrapCABA();
+
+//   console.log({ argentina: data, caba: dataCABA });
+// })();
