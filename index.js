@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 
-const scrap = async () => {
+const scrapArgentina = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -72,8 +72,58 @@ const scrap = async () => {
   };
 };
 
+const scrapCABA = async () => {
+  const browser = await puppeteer.launch();
+
+  const rootPage = "https://bamapas.usig.buenosaires.gob.ar/render_indicador/";
+
+  const iframePages = [
+    { url: "positivos_residentes_dia", name: "Positivos Residentes" },
+    { url: "altas_residentes_dia", name: "Altas Residentes" },
+    { url: "fallecidos_residentes_dia", name: "Fallecidos Residentes" },
+    {
+      url: "positivos_residentes_acumulado",
+      name: "Positivos Residentes Acumulado",
+    },
+    { url: "altas_residentes_acumulado", name: "Altas Residentes Acumulado" },
+    {
+      url: "fallecidos_residentes_acumulado",
+      name: "Fallecidos Residentes Acumulado",
+    },
+
+    { url: "positivos_no_residentes_dia", name: "Positivos No Residentes" },
+    { url: "altas_no_residentes_dia", name: "Altas No Residentes" },
+    { url: "fallecidos_no_residentes_dia", name: "Fallecidos No Residentes" },
+    {
+      url: "positivos_no_residentes_acumulado",
+      name: "Positivos No Residentes Acumulado",
+    },
+    {
+      url: "altas_no_residentes_acumulado",
+      name: "Altas No Residentes Acumulado",
+    },
+    {
+      url: "fallecidos_no_residentes_acumulado",
+      name: "Fallecidos No Residentes Acumulado",
+    },
+  ];
+
+  let dataCABA = {};
+
+  for (const iFrame of iframePages) {
+    let page = await browser.newPage();
+    await page.goto(rootPage + iFrame.url);
+    await page.waitForSelector("h2");
+    let value = await page.$eval("h2 > b", (value) => value.textContent);
+    dataCABA[iFrame.name] = parseInt(value.replace(/\./g,''));
+  }
+
+  console.log(dataCABA);
+
+  await browser.close();
+};
+
 // Para correr el servicio localmente
-// (async () => {
-//   const data = await scrap();
-//   console.log(data);
-// })();
+(async () => {
+  const data = await scrapCABA();
+})();
