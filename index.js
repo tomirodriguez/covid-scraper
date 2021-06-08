@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 
-(async () => {
+const scrap = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -17,7 +17,6 @@ const puppeteer = require("puppeteer");
   );
 
   const valuesParsed = {
-    lastUpdate: new Date(statisticsValues[0]),
     casesOfTheDay: parseInt(statisticsValues[1]),
     totalCases: parseInt(statisticsValues[2]),
     totalActiveCases: parseInt(statisticsValues[3]),
@@ -34,8 +33,6 @@ const puppeteer = require("puppeteer");
       statisticsValues[11].replace("%", "")
     ),
   };
-
-  console.log(valuesParsed);
 
   const tablesValues = await page.$$eval(".table-panel-table", (tables) =>
     tables.map((table) => {
@@ -67,4 +64,16 @@ const puppeteer = require("puppeteer");
   }
 
   await browser.close();
-})();
+
+  return {
+    lastUpdate: new Date(statisticsValues[0]),
+    covidData: valuesParsed,
+    provincesData: parsedTable,
+  };
+};
+
+// Para correr el servicio localmente
+// (async () => {
+//   const data = await scrap();
+//   console.log(data);
+// })();
