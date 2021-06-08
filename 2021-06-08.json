@@ -1,0 +1,74 @@
+{
+  "timeFetched": "2021-06-08T21:29:30.700Z",
+  "argentina": {
+    "lastUpdate": "15:01:13",
+    "covidData": {
+      "casesOfTheDay": 31137,
+      "totalCases": 4008771,
+      "totalActiveCases": 340293,
+      "totalRecovered": 3585811,
+      "deathOfTheDay": 722,
+      "totalDeath": 82667,
+      "testsOfTheDay": 112467,
+      "totalTests": 14752240,
+      "intensiveTherapy": 7794,
+      "intensiveTherapyNationPercentage": 79.1,
+      "intensiveTherapyAMBAPercentage": 77.3
+    },
+    "provincesData": [
+      {
+        "province": "Buenos Aires",
+        "casesOfTheDay": 10819,
+        "totalCases": 1688355
+      },
+      { "province": "CABA", "casesOfTheDay": 2131, "totalCases": 433425 },
+      { "province": "Catamarca", "casesOfTheDay": 506, "totalCases": 27216 },
+      { "province": "Chaco", "casesOfTheDay": 762, "totalCases": 64094 },
+      { "province": "Chubut", "casesOfTheDay": 326, "totalCases": 65838 },
+      { "province": "Corrientes", "casesOfTheDay": 115, "totalCases": 55062 },
+      { "province": "Córdoba", "casesOfTheDay": 5528, "totalCases": 346946 },
+      { "province": "Entre Ríos", "casesOfTheDay": 1148, "totalCases": 93527 },
+      { "province": "Formosa", "casesOfTheDay": 586, "totalCases": 36322 },
+      { "province": "Jujuy", "casesOfTheDay": 262, "totalCases": 30283 },
+      { "province": "La Pampa", "casesOfTheDay": 313, "totalCases": 45904 },
+      { "province": "La Rioja", "casesOfTheDay": 190, "totalCases": 18810 },
+      { "province": "Mendoza", "casesOfTheDay": 900, "totalCases": 126701 },
+      { "province": "Misiones", "casesOfTheDay": 200, "totalCases": 21875 },
+      { "province": "Neuquén", "casesOfTheDay": 574, "totalCases": 95197 },
+      { "province": "Río Negro", "casesOfTheDay": 471, "totalCases": 77596 },
+      { "province": "Salta", "casesOfTheDay": 563, "totalCases": 50040 },
+      { "province": "San Juan", "casesOfTheDay": 735, "totalCases": 40831 },
+      { "province": "San Luis", "casesOfTheDay": 436, "totalCases": 57127 },
+      { "province": "Santa Cruz", "casesOfTheDay": 132, "totalCases": 52959 },
+      { "province": "Santa Fe", "casesOfTheDay": 2837, "totalCases": 366387 },
+      {
+        "province": "Santiago del Estero",
+        "casesOfTheDay": 421,
+        "totalCases": 48148
+      },
+      {
+        "province": "Tierra del Fuego",
+        "casesOfTheDay": 37,
+        "totalCases": 28881
+      },
+      { "province": "Tucumán", "casesOfTheDay": 1145, "totalCases": 137247 }
+    ]
+  },
+  "caba": {
+    "positivos_residentes_dia": 1520,
+    "altas_residentes_dia": 100,
+    "fallecidos_residentes_dia": 48,
+    "positivos_residentes_acumulado": 426495,
+    "altas_residentes_acumulado": 59262,
+    "fallecidos_residentes_acumulado": 9890,
+    "positivos_no_residentes_dia": 1148,
+    "altas_no_residentes_dia": 83,
+    "fallecidos_no_residentes_dia": 11,
+    "positivos_no_residentes_acumulado": 308837,
+    "altas_no_residentes_acumulado": 23870,
+    "fallecidos_no_residentes_acumulado": 3429,
+    "vacunas_total_aplicaciones": 1311543,
+    "vacunas_total_aplicacion_dosis_1": 1026615,
+    "vacunas_total_aplicacion_dosis_2": 284928
+  }
+}

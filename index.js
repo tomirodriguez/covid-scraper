@@ -4,18 +4,20 @@ const scrapArgentina = async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
+  console.log("Scraping Oficial COVID-19 Data page . . .");
   await page.goto(
     "https://coronavirus.msal.gov.ar/publico/d/20as/sala-de-situacion-coronavirus-acceso-publico/d/20as/sala-de-situacion-coronavirus-acceso-publico?orgId=1&refresh=30m%2Flogin"
   );
 
+  console.log("Waiting to load . . .");
   await page.waitForSelector(".singlestat-panel-value");
 
   const statisticsValues = await page.$$eval(
-    // ".singlestat-panel-value > span",
     ".singlestat-panel-value",
     (fields) => fields.map((field) => field.textContent)
   );
 
+  console.log("Parsing generic values . . .");
   const valuesParsed = {
     casesOfTheDay: parseInt(statisticsValues[1]),
     totalCases: parseInt(statisticsValues[2]),
@@ -34,6 +36,7 @@ const scrapArgentina = async () => {
     ),
   };
 
+  console.log("Parsing provinces values . . .");
   const tablesValues = await page.$$eval(".table-panel-table", (tables) =>
     tables.map((table) => {
       const tableValues = [];
@@ -63,10 +66,11 @@ const scrapArgentina = async () => {
     });
   }
 
+  console.log("Fetching Oficial COVID-19 Data page DONE!");
   await browser.close();
 
   return {
-    lastUpdate: new Date(statisticsValues[0]),
+    lastUpdate: statisticsValues[0],
     covidData: valuesParsed,
     provincesData: parsedTable,
   };
@@ -74,6 +78,8 @@ const scrapArgentina = async () => {
 
 const scrapCABA = async () => {
   const browser = await puppeteer.launch();
+
+  console.log("Scraping Oficial CABA COVID-19 Data page . . .");
 
   const rootPage = "https://bamapas.usig.buenosaires.gob.ar/render_indicador/";
 
@@ -98,12 +104,26 @@ const scrapCABA = async () => {
   let dataCABA = {};
 
   for (const iFrame of iframePages) {
+    console.log(
+      "Visiting",
+      "https://bamapas.usig.buenosaires.gob.ar/render_indicador/" + iFrame,
+      ". . ."
+    );
     let page = await browser.newPage();
     await page.goto(rootPage + iFrame);
+
+    console.log("Waiting", iFrame, "to load . . .");
     await page.waitForSelector("h2");
+
+    console.log("Parsing", iFrame, ". . .");
     let value = await page.$eval("h2 > b", (value) => value.textContent);
     dataCABA[iFrame] = parseInt(value.replace(/\./g, ""));
+
+    console.log("Parsing", iFrame, "DONE!");
   }
+  
+  console.log("Fetching Oficial CABA COVID-19 Data page DONE!");
+
 
   await browser.close();
 
@@ -111,9 +131,11 @@ const scrapCABA = async () => {
 };
 
 // Para correr el servicio localmente
-// (async () => {
-//   const data = await scrapArgentina();
-//   const dataCABA = await scrapCABA();
+(async () => {
+  const data = await scrapArgentina();
+  const dataCABA = await scrapCABA();
 
-//   console.log({ argentina: data, caba: dataCABA });
-// })();
+  console.log(
+    JSON.stringify({ timeFetched: new Date(), argentina: data, caba: dataCABA })
+  );
+})();
